@@ -77,7 +77,7 @@ export class SimpleEc2Stack extends cdk.Stack {
       userData: ec2.UserData.custom(
         fs.readFileSync('lib/user_script.sh', 'utf8'
       )),
-      keyName: 'aws20200921keypair', // we will create this in the console before we deploy
+      keyName: 'awskeypair', // we will create this in the console before we deploy
     })
 
     // cdk lets us output prperties of the resources we create after they are created
