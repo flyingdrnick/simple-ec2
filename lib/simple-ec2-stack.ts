@@ -62,7 +62,7 @@ export class SimpleEc2Stack extends cdk.Stack {
     )
 
     // Finally lets provision our ec2 instance
-    const instanceLinux01 = new ec2.Instance(this, 'ubuntu18-a', {
+    const instance = new ec2.Instance(this, 'ubuntu18-a', {
       vpc: defaultVpc,
       role: role,
       securityGroup: securityGroup,
@@ -83,7 +83,7 @@ export class SimpleEc2Stack extends cdk.Stack {
     // cdk lets us output prperties of the resources we create after they are created
     // we want the ip address of this new instance so we can ssh into it later
     new cdk.CfnOutput(this, 'ubuntu18-a-output', {
-      value: instanceLinux01.instancePublicIp
+      value: instance.instancePublicIp
     })
   }
 }
