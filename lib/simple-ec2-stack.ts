@@ -69,7 +69,7 @@ export class SimpleEc2Stack extends cdk.Stack {
       instanceName: 'ubuntu18-a',
       instanceType: ec2.InstanceType.of( // t2.micro has free tier usage in aws
         ec2.InstanceClass.T3A,
-        ec2.InstanceSize.MICRO
+        ec2.InstanceSize.MEDIUM
       ),
       machineImage: ec2.MachineImage.genericLinux({
         'ap-southeast-2': 'ami-0f39d06d145e9bb63'
