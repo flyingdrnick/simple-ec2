@@ -68,7 +68,7 @@ export class SimpleEc2Stack extends cdk.Stack {
       securityGroup: securityGroup,
       instanceName: 'ubuntu18-a',
       instanceType: ec2.InstanceType.of( // t2.micro has free tier usage in aws
-        ec2.InstanceClass.T2,
+        ec2.InstanceClass.T3A,
         ec2.InstanceSize.MICRO
       ),
       machineImage: ec2.MachineImage.genericLinux({
