@@ -62,14 +62,14 @@ export class SimpleEc2Stack extends cdk.Stack {
     )
 
     // Finally lets provision our ec2 instance
-    const instance = new ec2.Instance(this, 'ubuntu18-a', {
+    const instance_a = new ec2.Instance(this, 'ubuntu18-a', {
       vpc: defaultVpc,
       role: role,
       securityGroup: securityGroup,
       instanceName: 'ubuntu18-a',
       instanceType: ec2.InstanceType.of( // t2.micro has free tier usage in aws
-        ec2.InstanceClass.T3A,
-        ec2.InstanceSize.MEDIUM
+        ec2.InstanceClass.T2,
+        ec2.InstanceSize.MICRO
       ),
       machineImage: ec2.MachineImage.genericLinux({
         'ap-southeast-2': 'ami-0f39d06d145e9bb63'
@@ -83,7 +83,55 @@ export class SimpleEc2Stack extends cdk.Stack {
     // cdk lets us output prperties of the resources we create after they are created
     // we want the ip address of this new instance so we can ssh into it later
     new cdk.CfnOutput(this, 'ubuntu18-a-output', {
-      value: instance.instancePublicIp
+      value: instance_a.instancePublicIp
     })
+
+    const instance_b = new ec2.Instance(this, 'ubuntu18-b', {
+      vpc: defaultVpc,
+      role: role,
+      securityGroup: securityGroup,
+      instanceName: 'ubuntu18-b',
+      instanceType: ec2.InstanceType.of( // t2.micro has free tier usage in aws
+        ec2.InstanceClass.T2,
+        ec2.InstanceSize.MICRO
+      ),
+      machineImage: ec2.MachineImage.genericLinux({
+        'ap-southeast-2': 'ami-0f39d06d145e9bb63'
+      }),
+      userData: ec2.UserData.custom(
+        fs.readFileSync('lib/user_script.sh', 'utf8'
+      )),
+      keyName: 'aws20200921keypair', // we will create this in the console before we deploy
+    })
+
+    // cdk lets us output prperties of the resources we create after they are created
+    // we want the ip address of this new instance so we can ssh into it later
+    new cdk.CfnOutput(this, 'ubuntu18-b-output', {
+      value: instance_b.instancePublicIp
+    })
+
+    const instance_c = new ec2.Instance(this, 'ubuntu18-c', {
+      vpc: defaultVpc,
+      role: role,
+      securityGroup: securityGroup,
+      instanceName: 'ubuntu18-c',
+      instanceType: ec2.InstanceType.of( // t2.micro has free tier usage in aws
+        ec2.InstanceClass.T2,
+        ec2.InstanceSize.MICRO
+      ),
+      machineImage: ec2.MachineImage.genericLinux({
+        'ap-southeast-2': 'ami-0f39d06d145e9bb63'
+      }),
+      userData: ec2.UserData.custom(
+        fs.readFileSync('lib/user_script.sh', 'utf8'
+      )),
+      keyName: 'aws20200921keypair', // we will create this in the console before we deploy
+    })
+
+    // cdk lets us output prperties of the resources we create after they are created
+    // we want the ip address of this new instance so we can ssh into it later
+    new cdk.CfnOutput(this, 'ubuntu18-c-output', {
+      value: instance_c.instancePublicIp
+    }) 
   }
 }
